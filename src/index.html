@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page d'Accueil</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="script.js"></script>
+</head>
+<body class="bg-gray-100 text-gray-900">
+
+    <!-- Menu de navigation -->
+    <nav class="bg-green-500 p-4">
+        <div class="flex justify-between">
+            <a href="javascript:void(0);" onclick="showCalculator()" class="text-white font-semibold">Calculatrice</a>
+            <a href="javascript:void(0);" onclick="showContactSection()" class="text-white font-semibold">Me contacter</a>
+        </div>
+    </nav>
+
+    <!-- Section Calculatrice -->
+    <section id="calculator-section" class="max-w-lg mx-auto p-6 bg-white shadow-md rounded-lg mt-10" style="display: none;">
+        <h2 class="text-2xl font-semibold text-green-500 mb-6 text-center">Calculatrice</h2>
+        <div class="mb-4">
+            <input type="number" id="number1" placeholder="Entrez le premier nombre" class="input input-bordered w-full mb-4" required>
+            <input type="number" id="number2" placeholder="Entrez le deuxième nombre" class="input input-bordered w-full" required>
+        </div>
+        <div class="grid grid-cols-4 gap-4 mb-4">
+            <button class="btn btn-accent" onclick="calculate('add')">➕</button>
+            <button class="btn btn-accent" onclick="calculate('subtract')">➖</button>
+            <button class="btn btn-accent" onclick="calculate('multiply')">✖️</button>
+            <button class="btn btn-accent" onclick="calculate('divide')">➗</button>
+        </div>
+        <p id="result" class="text-xl font-semibold mt-4 text-center"></p>
+        <div class="text-center mt-6">
+            <button class="btn btn-secondary" onclick="goBack()">Retour</button>
+        </div>
+    </section>
+
+    <!-- Section Contact -->
+    <section id="contact-section" class="max-w-lg mx-auto p-6 bg-white shadow-md rounded-lg mt-10" style="display: none;">
+        <h2 class="text-2xl font-semibold text-green-500 mb-6 text-center">Me contacter</h2>
+        <p class="mb-6">Pour me contacter, vous devez répondre correctement aux questions suivantes.</p>
+        <div id="question-container" class="text-center"></div>
+        <div id="message-container" class="text-center mt-4">
+            <button id="createContactPageBtn" class="btn btn-accent">Créer la page de contact</button>
+        </div>
+    </section>
+
+    <!-- Formulaire de contact -->
+    <section id="contact-form-section" class="max-w-lg mx-auto p-6 bg-white shadow-md rounded-lg mt-10" style="display: none;">
+        <h2 class="text-2xl font-semibold text-green-500 mb-6 text-center">Formulaire de Contact</h2>
+        <form id="contact-form" method="POST" action="mailto:ton-email@example.com" enctype="multipart/form-data">
+            <div class="mb-4">
+                <label for="name" class="block text-sm font-semibold">Nom</label>
+                <input type="text" id="name" name="name" class="input input-bordered w-full" required>
+            </div>
+            <div class="mb-4">
+                <label for="surname" class="block text-sm font-semibold">Prénom</label>
+                <input type="text" id="surname" name="surname" class="input input-bordered w-full" required>
+            </div>
+            <div class="mb-4">
+                <label for="email" class="block text-sm font-semibold">Email</label>
+                <input type="email" id="email" name="email" class="input input-bordered w-full" required>
+            </div>
+            <div class="mb-4">
+                <label for="message" class="block text-sm font-semibold">Message</label>
+                <textarea id="message" name="message" class="textarea textarea-bordered w-full" rows="4" required></textarea>
+            </div>
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary">Envoyer</button>
+            </div>
+        </form>
+    </section>
+
+    <!-- Brute Force Button -->
+    <section class="text-center mt-6">
+        <button id="bruteForceBtn" class="btn btn-danger">Brute Force - Forcer les bonnes réponses</button>
+    </section>
+
+    <script>
+        // Fonction pour afficher la section calculatrice
+        function showCalculator() {
+            document.getElementById('calculator-section').style.display = 'block';
+            document.getElementById('contact-section').style.display = 'none';
+            document.getElementById('contact-form-section').style.display = 'none';
+        }
+
+        // Fonction pour revenir à la page d'accueil
+        function goBack() {
+            document.getElementById('calculator-section').style.display = 'none';
+            document.getElementById('contact-section').style.display = 'none';
+            document.getElementById('contact-form-section').style.display = 'none';
+        }
+
+        // Fonction pour afficher la section contact
+        function showContactSection() {
+            document.getElementById('contact-section').style.display = 'block';
+            document.getElementById('calculator-section').style.display = 'none';
+            document.getElementById('contact-form-section').style.display = 'none';
+            loadQuestionnaire(); // Charger les questions
+        }
+
+        // Questionnaire
+        const questionnaire = [
+            {
+                qlabel: 'Quelle est la capitale de la France ?',
+                qid: 1,
+                reponses: [
+                    { rlabel: 'Paris', rid: 1, correct: true },
+                    { rlabel: 'Lyon', rid: 2, correct: false },
+                    { rlabel: 'Marseille', rid: 3, correct: false }
+                ]
+            },
+            {
+                qlabel: 'Combien de continents y a-t-il ?',
+                qid: 2,
+                reponses: [
+                    { rlabel: '6', rid: 1, correct: false },
+                    { rlabel: '7', rid: 2, correct: true },
+                    { rlabel: '8', rid: 3, correct: false }
+                ]
+            }
+        ];
+
+        let currentQuestionIndex = 0;
+        let reponses = '';
+        let correctAnswers = 0; // Variable pour compter les bonnes réponses
+
+        // Charger la question suivante
+        function loadQuestionnaire() {
+            if (currentQuestionIndex < questionnaire.length) {
+                const container = document.getElementById('question-container');
+                const question = questionnaire[currentQuestionIndex];
+                container.innerHTML = ''; // Réinitialiser le contenu de la question
+
+                const questionElement = document.createElement('div');
+                questionElement.classList.add('mb-6');
+
+                const questionText = document.createElement('p');
+                questionText.classList.add('text-xl', 'font-semibold');
+                questionText.textContent = question.qlabel;
+                questionElement.appendChild(questionText);
+
+                // Créer les boutons de réponse
+                question.reponses.forEach(reponse => {
+                    const button = document.createElement('button');
+                    button.textContent = reponse.rlabel;
+                    button.classList.add('btn', 'btn-primary', 'w-full', 'mt-2');
+                    button.onclick = () => handleAnswer(reponse);
+                    questionElement.appendChild(button);
+                });
+
+                container.appendChild(questionElement);
+            } else {
+                document.getElementById('question-container').innerHTML = `<p class="text-xl font-semibold">Merci d'avoir répondu à toutes les questions !</p>`;
+                checkAnswers(); // Vérifier si toutes les réponses sont correctes
+            }
+        }
+
+        // Gérer la réponse et passer à la question suivante
+        function handleAnswer(reponse) {
+            if (reponse.correct) {
+                correctAnswers++; // Compter une réponse correcte
+            }
+            reponses += `A${reponse.qid}_${reponse.rid}...`;
+            currentQuestionIndex++;
+            loadQuestionnaire();
+        }
+
+        // Vérifier si toutes les réponses sont correctes
+        function checkAnswers() {
+            if (correctAnswers === questionnaire.length) {
+                showContactFormSection(); // Afficher le formulaire de contact
+            } else {
+                document.getElementById('question-container').innerHTML = '<p class="text-xl font-semibold">Suite à vos réponses, vous ne souhaitez pas être contacté.</p>';
+            }
+        }
+
+        // Afficher la section formulaire de contact
+        function showContactFormSection() {
+            document.getElementById('contact-form-section').style.display = 'block';
+
+            // Pré-remplir le message du formulaire
+            const message = `Bonjour, voici mes réponses : ${reponses}.`;
+            document.getElementById('message').value = message;
+        }
+
+        // Fonction brute force
+        document.getElementById('bruteForceBtn').addEventListener('click', function() {
+            // Forcer les bonnes réponses
+            reponses = 'A1_1...A2_2...'; // Forcer les réponses correctes
+            currentQuestionIndex = questionnaire.length; // Passer à la fin
+            loadQuestionnaire();
+        });
+    </script>
+</body>
+</html>
