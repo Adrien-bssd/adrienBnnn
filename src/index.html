@@ -1,197 +1,316 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Page d'Accueil</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script defer src="script.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page d'Accueil</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-100 text-gray-900">
 
-    <!-- Menu de navigation -->
-    <nav class="bg-green-500 p-4">
-        <div class="flex justify-between">
-            <a href="javascript:void(0);" onclick="showCalculator()" class="text-white font-semibold">Calculatrice</a>
-            <a href="javascript:void(0);" onclick="showContactSection()" class="text-white font-semibold">Me contacter</a>
+  <!-- Menu de navigation -->
+  <nav class="bg-white shadow-md sticky top-0 z-10">
+    <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
+      <div class="text-2xl font-bold text-green-600">🧮 Mon Cv</div>
+      <div class="space-x-4">
+        <button onclick="showCalculator()" class="text-gray-700 hover:text-green-500 font-medium transition">Calculatrice</button>
+        <button onclick="showContactSection()" class="text-gray-700 hover:text-green-500 font-medium transition">Contact</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- SECTION DE PRÉSENTATION -->
+  <section id="cv-section" class="max-w-6xl mx-auto p-6 mt-10 bg-white shadow-md rounded-lg">
+    <h2 class="text-2xl font-semibold text-green-500 mb-6 text-center">Mon CV</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+      <!-- Partie gauche -->
+      <div class="space-y-6">
+        <div>
+          <h3 class="text-xl font-bold mb-2 border-b pb-1">Parcours scolaire</h3>
+          <p><strong>2017-2021</strong> : Collège Jacqueline Auriol <br>
+            (obtention du brevet des collèges mention : bien)</p>
+          <p class="mt-2"><strong>2021-2024</strong> : <em>Lycée Jacques Prévert</em> <br> <em>actuellement en terminale</em><br>
+            spécialité : mathématiques physique-chimie</p>
         </div>
-    </nav>
 
-    <!-- Section Calculatrice -->
-    <section id="calculator-section" class="max-w-lg mx-auto p-6 bg-white shadow-md rounded-lg mt-10" style="display: none;">
-        <h2 class="text-2xl font-semibold text-green-500 mb-6 text-center">Calculatrice</h2>
-        <div class="mb-4">
-            <input type="number" id="number1" placeholder="Entrez le premier nombre" class="input input-bordered w-full mb-4" required>
-            <input type="number" id="number2" placeholder="Entrez le deuxième nombre" class="input input-bordered w-full" required>
+        <div>
+          <h3 class="text-xl font-bold mb-2 border-b pb-1">Compétences</h3>
+          <ul class="list-disc list-inside">
+            <li>Anglais</li>
+            <li>Portugais</li>
+          </ul>
         </div>
-        <div class="grid grid-cols-4 gap-4 mb-4">
-            <button class="btn btn-accent" onclick="calculate('add')">➕</button>
-            <button class="btn btn-accent" onclick="calculate('subtract')">➖</button>
-            <button class="btn btn-accent" onclick="calculate('multiply')">✖️</button>
-            <button class="btn btn-accent" onclick="calculate('divide')">➗</button>
+
+        <div>
+          <h3 class="text-xl font-bold mb-2 border-b pb-1">Soft Skills</h3>
+          <ul class="list-disc list-inside">
+            <li>Volontaire</li>
+            <li>Dynamique</li>
+            <li>Autonome</li>
+            <li>Sociable</li>
+          </ul>
         </div>
-        <p id="result" class="text-xl font-semibold mt-4 text-center"></p>
-        <div class="text-center mt-6">
-            <button class="btn btn-secondary" onclick="goBack()">Retour</button>
-        </div>
-    </section>
+      </div>
 
-    <!-- Section Contact -->
-    <section id="contact-section" class="max-w-lg mx-auto p-6 bg-white shadow-md rounded-lg mt-10" style="display: none;">
-        <h2 class="text-2xl font-semibold text-green-500 mb-6 text-center">Me contacter</h2>
-        <p class="mb-6">Pour me contacter, vous devez répondre correctement aux questions suivantes.</p>
-        <div id="question-container" class="text-center"></div>
-        <div id="message-container" class="text-center mt-4">
-            <button id="createContactPageBtn" class="btn btn-accent">Créer la page de contact</button>
-        </div>
-    </section>
+      <!-- Partie droite -->
+      <div>
+        <h3 class="text-xl font-bold mb-2 border-b pb-1">Loisirs</h3>
+        <ul class="list-disc list-inside">
+          <li>cours de théâtre</li>
+          <li>cinéma</li>
+          <li>musées : ma tante est conservatrice de musée, j’ai ainsi assisté à de nombreuses expositions depuis très jeune</li>
+          <li>sport :
+            <ul class="list-disc ml-6 mt-1">
+              <li>courses : de nombreux 10 km effectués (PSG, Paris centre, Bois de Boulogne) et un 20 km en préparation</li>
+              <li>escalade</li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
 
-    <!-- Formulaire de contact -->
-    <section id="contact-form-section" class="max-w-lg mx-auto p-6 bg-white shadow-md rounded-lg mt-10" style="display: none;">
-        <h2 class="text-2xl font-semibold text-green-500 mb-6 text-center">Formulaire de Contact</h2>
-        <form id="contact-form" method="POST" action="mailto:ton-email@example.com" enctype="multipart/form-data">
-            <div class="mb-4">
-                <label for="name" class="block text-sm font-semibold">Nom</label>
-                <input type="text" id="name" name="name" class="input input-bordered w-full" required>
-            </div>
-            <div class="mb-4">
-                <label for="surname" class="block text-sm font-semibold">Prénom</label>
-                <input type="text" id="surname" name="surname" class="input input-bordered w-full" required>
-            </div>
-            <div class="mb-4">
-                <label for="email" class="block text-sm font-semibold">Email</label>
-                <input type="email" id="email" name="email" class="input input-bordered w-full" required>
-            </div>
-            <div class="mb-4">
-                <label for="message" class="block text-sm font-semibold">Message</label>
-                <textarea id="message" name="message" class="textarea textarea-bordered w-full" rows="4" required></textarea>
-            </div>
-            <div class="text-center">
-                <button type="submit" class="btn btn-primary">Envoyer</button>
-            </div>
-        </form>
-    </section>
+  <!-- Section Calculatrice -->
+  <section id="calculator-section" class="max-w-lg mx-auto p-6 bg-white shadow-md rounded-lg mt-10" style="display: none;">
+    <h2 class="text-2xl font-semibold text-green-500 mb-6 text-center">Calculatrice</h2>
+    <div class="mb-4">
+      <input type="number" id="number1" placeholder="Entrez le premier nombre" class="input input-bordered w-full mb-4" required>
+      <input type="number" id="number2" placeholder="Entrez le deuxième nombre" class="input input-bordered w-full" required>
+    </div>
+    <div class="grid grid-cols-4 gap-4 mb-4">
+      <button class="btn btn-accent" onclick="calculate('add')">➕</button>
+      <button class="btn btn-accent" onclick="calculate('subtract')">➖</button>
+      <button class="btn btn-accent" onclick="calculate('multiply')">✖️</button>
+      <button class="btn btn-accent" onclick="calculate('divide')">➗</button>
+    </div>
+    <p id="result" class="text-xl font-semibold mt-4 text-center"></p>
+    <div class="text-center mt-6">
+      <button class="btn btn-secondary" onclick="goBack()">Retour</button>
+    </div>
+  </section>
 
-    <!-- Brute Force Button -->
-    <section class="text-center mt-6">
-        <button id="bruteForceBtn" class="btn btn-danger">Brute Force - Forcer les bonnes réponses</button>
-    </section>
+  <!-- Section Contact -->
+  <section id="contact-section" class="max-w-lg mx-auto p-6 bg-white shadow-md rounded-lg mt-10" style="display: none;">
+    <div id="intro-contact">
+      <h2 class="text-2xl font-semibold text-green-500 mb-6 text-center">Me contacter</h2>
+      <p class="mb-6">Pour me contacter, vous devez répondre correctement aux questions suivantes :</p>
+    </div>
+    <div id="question-container" class="text-center"></div>
+    <div id="message-container" class="text-center mt-4"></div>
+    <div id="bruteForceSection" class="text-center mt-4" style="display: block;">
+      <div class="flex justify-center gap-4">
+        <button id="bruteForceBtn" class="btn btn-danger border-2 border-green-500 text-green-500 hover:bg-green-500 hover:text-white py-2 px-4 rounded-lg">🔒Brute Force🔓</button>
+        <button onclick="goBack()" class="btn btn-secondary border-2 border-green-500 text-green-500 hover:bg-green-500 hover:text-white py-2 px-4 rounded-lg">Retour</button>
+      </div>
+    </div>
+  </section>
 
-    <script>
-        // Fonction pour afficher la section calculatrice
-        function showCalculator() {
-            document.getElementById('calculator-section').style.display = 'block';
-            document.getElementById('contact-section').style.display = 'none';
-            document.getElementById('contact-form-section').style.display = 'none';
-        }
+  <!-- Formulaire de contact -->
+  <section id="contact-form-section" class="max-w-lg mx-auto p-6 bg-white shadow-md rounded-lg mt-10" style="display: none;">
+    <h2 class="text-2xl font-semibold text-green-500 mb-6 text-center">Formulaire de Contact</h2>
+    <form id="contact-form" method="POST" action="mailto:ton-email@example.com" enctype="multipart/form-data">
+      <div class="mb-4">
+        <label for="name" class="block text-sm font-semibold">Nom</label>
+        <input type="text" id="name" name="name" class="input input-bordered w-full" required>
+      </div>
+      <div class="mb-4">
+        <label for="surname" class="block text-sm font-semibold">Prénom</label>
+        <input type="text" id="surname" name="surname" class="input input-bordered w-full" required>
+      </div>
+      <div class="mb-4">
+        <label for="email" class="block text-sm font-semibold">Email</label>
+        <input type="email" id="email" name="email" class="input input-bordered w-full" required>
+      </div>
+      <div class="mb-4">
+        <label for="message" class="block text-sm font-semibold">Message</label>
+        <textarea id="message" name="message" class="textarea textarea-bordered w-full" rows="4" required></textarea>
+      </div>
+      <div class="text-center">
+        <button type="submit" class="btn btn-primary">Envoyer</button>
+      </div>
+    </form>
+  </section>
 
-        // Fonction pour revenir à la page d'accueil
-        function goBack() {
-            document.getElementById('calculator-section').style.display = 'none';
-            document.getElementById('contact-section').style.display = 'none';
-            document.getElementById('contact-form-section').style.display = 'none';
-        }
+  <script>
+    function showCalculator() {
+      document.getElementById('calculator-section').style.display = 'block';
+      document.getElementById('contact-section').style.display = 'none';
+      document.getElementById('contact-form-section').style.display = 'none';
+      document.getElementById('cv-section').style.display = 'none';
+    }
 
-        // Fonction pour afficher la section contact
-        function showContactSection() {
-            document.getElementById('contact-section').style.display = 'block';
-            document.getElementById('calculator-section').style.display = 'none';
-            document.getElementById('contact-form-section').style.display = 'none';
-            loadQuestionnaire(); // Charger les questions
-        }
+    function goBack() {
+      document.getElementById('calculator-section').style.display = 'none';
+      document.getElementById('contact-section').style.display = 'none';
+      document.getElementById('contact-form-section').style.display = 'none';
+      document.getElementById('cv-section').style.display = 'block';
+    }
 
-        // Questionnaire
-        const questionnaire = [
-            {
-                qlabel: 'Quelle est la capitale de la France ?',
-                qid: 1,
-                reponses: [
-                    { rlabel: 'Paris', rid: 1, correct: true },
-                    { rlabel: 'Lyon', rid: 2, correct: false },
-                    { rlabel: 'Marseille', rid: 3, correct: false }
-                ]
-            },
-            {
-                qlabel: 'Combien de continents y a-t-il ?',
-                qid: 2,
-                reponses: [
-                    { rlabel: '6', rid: 1, correct: false },
-                    { rlabel: '7', rid: 2, correct: true },
-                    { rlabel: '8', rid: 3, correct: false }
-                ]
-            }
-        ];
+    function showContactSection() {
+      document.getElementById('contact-section').style.display = 'block';
+      document.getElementById('calculator-section').style.display = 'none';
+      document.getElementById('contact-form-section').style.display = 'none';
+      document.getElementById('cv-section').style.display = 'none';
+      document.getElementById('bruteForceSection').style.display = 'block';
+      loadQuestionnaire();
+    }
 
-        let currentQuestionIndex = 0;
-        let reponses = '';
-        let correctAnswers = 0; // Variable pour compter les bonnes réponses
+    const questionnaire = [
+      {
+        qlabel: 'Quelle est la capitale de la Paris ?',
+        qid: 1,
+        reponses: [
+          { rlabel: 'Paris', rid: 1, correct: true },
+          { rlabel: 'Marseille', rid: 2, correct: false },
+          { rlabel: 'La tour eiffel ', rid: 3, correct: false }
+        ]
+      },
+      {
+        qlabel: 'quel est le meilleur starter ',
+        qid: 2,
+        reponses: [
+          { rlabel: 'carapuce', rid: 1, correct: false },
+          { rlabel: 'salamèche', rid: 2, correct: true },
+          { rlabel: 'bulbizarre', rid: 3, correct: false }
+        ]
+      }
+    ];
 
-        // Charger la question suivante
-        function loadQuestionnaire() {
-            if (currentQuestionIndex < questionnaire.length) {
-                const container = document.getElementById('question-container');
-                const question = questionnaire[currentQuestionIndex];
-                container.innerHTML = ''; // Réinitialiser le contenu de la question
+    let currentQuestionIndex = 0;
+    let reponses = '';
+    let correctAnswers = 0;
 
-                const questionElement = document.createElement('div');
-                questionElement.classList.add('mb-6');
+    function loadQuestionnaire() {
+      const container = document.getElementById('question-container');
+      const bruteForceBtn = document.getElementById('bruteForceSection');
 
-                const questionText = document.createElement('p');
-                questionText.classList.add('text-xl', 'font-semibold');
-                questionText.textContent = question.qlabel;
-                questionElement.appendChild(questionText);
+      if (currentQuestionIndex < questionnaire.length) {
+        if (bruteForceBtn) bruteForceBtn.style.display = 'block';
+        container.innerHTML = '';
+        const question = questionnaire[currentQuestionIndex];
 
-                // Créer les boutons de réponse
-                question.reponses.forEach(reponse => {
-                    const button = document.createElement('button');
-                    button.textContent = reponse.rlabel;
-                    button.classList.add('btn', 'btn-primary', 'w-full', 'mt-2');
-                    button.onclick = () => handleAnswer(reponse);
-                    questionElement.appendChild(button);
-                });
+        const questionElement = document.createElement('div');
+        questionElement.classList.add('mb-6');
 
-                container.appendChild(questionElement);
-            } else {
-                document.getElementById('question-container').innerHTML = `<p class="text-xl font-semibold">Merci d'avoir répondu à toutes les questions !</p>`;
-                checkAnswers(); // Vérifier si toutes les réponses sont correctes
-            }
-        }
+        const questionText = document.createElement('p');
+        questionText.classList.add('text-xl', 'font-semibold');
+        questionText.textContent = question.qlabel;
+        questionElement.appendChild(questionText);
 
-        // Gérer la réponse et passer à la question suivante
-        function handleAnswer(reponse) {
-            if (reponse.correct) {
-                correctAnswers++; // Compter une réponse correcte
-            }
-            reponses += `A${reponse.qid}_${reponse.rid}...`;
-            currentQuestionIndex++;
-            loadQuestionnaire();
-        }
-
-        // Vérifier si toutes les réponses sont correctes
-        function checkAnswers() {
-            if (correctAnswers === questionnaire.length) {
-                showContactFormSection(); // Afficher le formulaire de contact
-            } else {
-                document.getElementById('question-container').innerHTML = '<p class="text-xl font-semibold">Suite à vos réponses, vous ne souhaitez pas être contacté.</p>';
-            }
-        }
-
-        // Afficher la section formulaire de contact
-        function showContactFormSection() {
-            document.getElementById('contact-form-section').style.display = 'block';
-
-            // Pré-remplir le message du formulaire
-            const message = `Bonjour, voici mes réponses : ${reponses}.`;
-            document.getElementById('message').value = message;
-        }
-
-        // Fonction brute force
-        document.getElementById('bruteForceBtn').addEventListener('click', function() {
-            // Forcer les bonnes réponses
-            reponses = 'A1_1...A2_2...'; // Forcer les réponses correctes
-            currentQuestionIndex = questionnaire.length; // Passer à la fin
-            loadQuestionnaire();
+        question.reponses.forEach(reponse => {
+          const button = document.createElement('button');
+          button.textContent = reponse.rlabel;
+          button.classList.add('btn', 'btn-primary', 'w-full', 'mt-2');
+          button.onclick = () => handleAnswer(reponse);
+          questionElement.appendChild(button);
         });
-    </script>
+
+        container.appendChild(questionElement);
+      } else {
+        container.innerHTML = `<p class="text-xl font-semibold">Merci d'avoir répondu à toutes les questions !</p>`;
+        if (bruteForceBtn) bruteForceBtn.style.display = 'none';
+        checkAnswers();
+      }
+    }
+
+    function handleAnswer(reponse) {
+      if (currentQuestionIndex === 0) {
+        const intro = document.getElementById('intro-contact');
+        if (intro) intro.style.display = 'none';
+      }
+
+      if (reponse.correct) {
+        correctAnswers++;
+      }
+
+      reponses += `A${reponse.qid}_${reponse.rid}...`;
+      currentQuestionIndex++;
+      loadQuestionnaire();
+    }
+
+    function checkAnswers() {
+      if (correctAnswers === questionnaire.length) {
+        showContactFormSection();
+      } else {
+        document.getElementById('question-container').innerHTML = '<p class="text-xl font-semibold">Suite à vos réponses, vous ne souhaitez pas être contacté.</p>';
+      }
+    }
+
+    function showContactFormSection() {
+      const bruteForceBtn = document.getElementById('bruteForceSection');
+      if (bruteForceBtn) bruteForceBtn.style.display = 'none';
+      document.getElementById('contact-form-section').style.display = 'block';
+      const message = `Bonjour, je voudrais vous contactez pour...`;
+      document.getElementById('message').value = message;
+    }
+
+    document.getElementById('bruteForceBtn').addEventListener('click', function () {
+      const intro = document.getElementById('intro-contact');
+      if (intro) intro.style.display = 'none';
+
+      const container = document.getElementById('question-container');
+      container.innerHTML = `<p id="bruteForceMessage" class="text-xl font-semibold text-green-600 font-mono"></p>`;
+
+      const message = "Tentative de brute force en cours.......";
+
+      typeWriter(message, "bruteForceMessage", 50, function () {
+        setTimeout(() => {
+          reponses = 'A1_1...A2_2...';
+          container.innerHTML = 'Accès autorisé !'
+          showContactFormSection();
+        }, 0);
+      });
+    });
+
+    function typeWriter(text, elementId, speed = 50, callback) {
+      let i = 0;
+      const element = document.getElementById(elementId);
+      element.innerHTML = '';
+      function type() {
+        if (i < text.length) {
+          element.innerHTML += text.charAt(i);
+          i++;
+          setTimeout(type, speed);
+        } else if (callback) {
+          callback();
+        }
+      }
+      type();
+    }
+
+    function calculate(operation) {
+      const number1 = parseFloat(document.getElementById('number1').value);
+      const number2 = parseFloat(document.getElementById('number2').value);
+      let result = 0;
+
+      if (isNaN(number1) || isNaN(number2)) {
+        document.getElementById('result').textContent = "Veuillez entrer des nombres valides.";
+        return;
+      }
+
+      switch (operation) {
+        case 'add':
+          result = number1 + number2;
+          break;
+        case 'subtract':
+          result = number1 - number2;
+          break;
+        case 'multiply':
+          result = number1 * number2;
+          break;
+        case 'divide':
+          if (number2 === 0) {
+            document.getElementById('result').textContent = "Impossible de diviser par zéro.";
+            return;
+          }
+          result = number1 / number2;
+          break;
+        default:
+          document.getElementById('result').textContent = "Opération inconnue.";
+          return;
+      }
+      document.getElementById('result').textContent = `Résultat : ${result}`;
+    }
+  </script>
 </body>
 </html>
